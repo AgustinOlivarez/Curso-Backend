@@ -1,1 +1,38 @@
-[{"id":1,"title":"Update","description":"Este es un producto de prueba modificado","price":999,"thumbnail":"no image","code":"A999","stock":999}]
+[
+  {
+    "id": 1,
+    "title": "Tele",
+    "description": "Smart TV",
+    "price": 100000,
+    "thumbnail": "no image",
+    "code": "A2",
+    "stock": 30
+  },
+  {
+    "id": 2,
+    "title": "IPhoneX",
+    "description": "SmartPhone",
+    "price": 150000,
+    "thumbnail": "no image",
+    "code": "A1",
+    "stock": 15
+  },
+  {
+    "id": 3,
+    "title": "Samsung S23",
+    "description": "SmartPhone",
+    "price": 200000,
+    "thumbnail": "no image",
+    "code": "A3",
+    "stock": 45
+  },
+  {
+    "id": 4,
+    "title": "LicuadoraXPrime",
+    "description": "Cocina",
+    "price": 30000,
+    "thumbnail": "no image",
+    "code": "A4",
+    "stock": 8
+  }
+]
