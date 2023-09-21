@@ -6,7 +6,7 @@ class ProductManager {
   }
 
   async GetProducts(queryObj) {
-    const {limit} = queryObj
+   let limit = queryObj !== undefined ? queryObj  : 0;
     try {
       if (fs.existsSync(this.path)) {
         const info = await fs.promises.readFile(this.path, "utf-8");
@@ -45,11 +45,10 @@ class ProductManager {
   }
 
   async getProductById(idProduct) {
+    const products = await this.GetProducts();
+    const product = products.find((p) => p.id === idProduct);
     try {
-      const products = await this.GetProducts();
-      const product = products.find((p) => p.id === idProduct);
-      if (!product) {
-        console.log("no product");
+      if (product === undefined) {
         return "No product";
       } else {
           console.log(product);

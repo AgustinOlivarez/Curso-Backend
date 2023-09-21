@@ -6,7 +6,7 @@ const app = express();
 app.get("/api/products", async (req, res) => {
   const {limit} = req.query
   try {
-    const products = await productsManager.GetProducts(req.query);
+    const products = await productsManager.GetProducts(limit);
     if (!products.length) {
       return res.status(200).json({ message: "No products" });
     }
@@ -17,9 +17,8 @@ app.get("/api/products", async (req, res) => {
 });
 
 app.get("/api/products/:idProduct", async (req, res) => {
-  const { idProduct } = req.params;
   try {
-    const product = await productsManager.getProductById(idProduct);
+    const product = await productsManager.getProductById(+req.params.idProduct);
     if (!product) {
       return res.status(400).json({ message: "Product not found with the id" });
     }
