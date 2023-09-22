@@ -90,14 +90,14 @@ class ProductManager {
   }
 }
 
-async function test() {
-  const manager1 = new ProductManager("Products.json");
+// async function test() {
+//   const manager1 = new ProductManager("Products.json");
   //    await manager1.addProduct("Tele","Smart TV",100000,"no image","A2",30)
   //    await manager1.addProduct("IPhoneX","SmartPhone",150000,"no image","A1",15)
   // await manager1.addProduct("Samsung S23","SmartPhone",200000,"no image","A3",45)
   // await manager1.addProduct("LicuadoraXPrime","Cocina",30000,"no image","A4",8)
   // await manager1.deleteProduct(2)
-  await manager1.getProductById(1);
+  // await manager1.getProductById(1);
   // let updateToDo = {
   //     title: 'Update',
   //     description: 'Este es un producto de prueba modificado',
@@ -109,7 +109,7 @@ async function test() {
   // await manager1.updateProduct(1,updateToDo)
   // const products = await manager1.GetProducts()
   // console.log(products);
-}
-test();
+// }
+// test();
 
 export const productsManager = new ProductManager("Products.json");
