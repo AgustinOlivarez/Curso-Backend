@@ -6,7 +6,8 @@
     "price": 100000,
     "thumbnail": "no image",
     "code": "A2",
-    "stock": 30
+    "stock": 30,
+    "status": true
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "price": 150000,
     "thumbnail": "no image",
     "code": "A1",
-    "stock": 15
+    "stock": 15,
+    "status": true
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@
     "price": 200000,
     "thumbnail": "no image",
     "code": "A3",
-    "stock": 45
+    "stock": 45,
+    "status": true
   },
   {
     "id": 4,
@@ -33,6 +36,18 @@
     "price": 30000,
     "thumbnail": "no image",
     "code": "A4",
-    "stock": 8
+    "stock": 8,
+    "status": true
+  },
+  {
+    "id": 5,
+    "title": "ADD",
+    "description": "Cocina",
+    "price": 30000,
+    "code": "A4",
+    "stock": 8,
+    "category": "Electronico",
+    "thumbnail": "no image",
+    "status": true
   }
 ]

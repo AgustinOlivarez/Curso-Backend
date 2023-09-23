@@ -1,5 +1,5 @@
 import { Router } from "express";
-// import { productsManager } from "../.src/ProductManager.js";
+import { productsManager } from "./../ProductManager.js";
 const router = Router();
 
 router.get("/api/products", async (req, res) => {
@@ -27,5 +27,20 @@ router.get("/api/products/:idProduct", async (req, res) => {
   }
 });
 
+router.post("/api/products", async (req, res) => {
+  const { title, description, price, code, stock, category } = req.body;
+  let NewProduct = req.body;
+  if (!title || !description || !price || !code || !stock || !category) {
+    return res.status(400).json({ message: "Some data is missing" });
+  }
+  try {
+    const result = await productsManager.addProduct(NewProduct);
+    res.status(200).json({ message: "Product Added", product: result });
+    req.product = result;
+    res.redirect(`/api/products/${result.id}`);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
 
-export default router
+export default router;

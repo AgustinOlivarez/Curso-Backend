@@ -21,24 +21,22 @@ class ProductManager {
     }
   }
 
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct(NewProduct) {
     try {
       const products = await this.GetProducts();
       const newProduct = {
         id: products.length ? products[products.length - 1].id + 1 : 1,
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
+        ...NewProduct,
+        status: true
       };
-      if (!title || !description || !price || !thumbnail || !code || !stock) {
-        return "Por favor complete todos los parametros del producto";
-      } else {
+      console.log (newProduct)
+      // if (!title || !description || !price || !thumbnail || !code || !stock) {
+      //   return "Por favor complete todos los parametros del producto";
+      // } else {
         products.push(newProduct);
         await fs.promises.writeFile(this.path, JSON.stringify(products));
-      }
+        return newProduct
+      // }
     } catch (error) {
       return error;
     }
