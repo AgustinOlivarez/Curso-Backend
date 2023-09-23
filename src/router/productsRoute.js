@@ -43,14 +43,11 @@ router.post("/api/products", async (req, res) => {
   }
 });
 
-// terminar update
 router.put("/api/products/:idProduct", async (req, res) => {
   const newValue = req.body
   const { idProduct } = req.params
-  console.log(newValue)
-  console.log(req.params)
   try {
-    const response = await productsManager.updateProduct(idProduct, newValue)
+    const response = await productsManager.updateProduct(+idProduct, newValue)
     if (response === -1) {
       res.status(400).json({ message: "Product not found with the id sent" });
     } else {

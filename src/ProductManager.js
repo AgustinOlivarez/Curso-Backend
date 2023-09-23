@@ -45,7 +45,6 @@ class ProductManager {
   async getProductById(idProduct) {
     const products = await this.GetProducts();
     const product = products.find((p) => p.id === idProduct);
-    console.log(idProduct)
     try {
       if (product === undefined) {
         return "No product";
@@ -69,11 +68,8 @@ class ProductManager {
   }
 
   async updateProduct(idProduct, newValue) {
-    console.log(newValue)
     try {
-      console.log (idProduct)
       let product = await this.getProductById(idProduct);
-      console.log (product);
       product = { id: idProduct, ...product, ...newValue };
       const products = await this.GetProducts();
       const productID = products.findIndex((p) => p.id === idProduct);
