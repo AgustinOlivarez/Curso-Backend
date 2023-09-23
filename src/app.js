@@ -1,5 +1,5 @@
 import express from "express";
-import { productsManager } from "./router/ProductManager.js";
+// import { productsManager } from "./src/ProductManager.js";
 import productsRouter from "./router/productsRoute.js"
 const app = express();
 
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }))
 //   }
 // });
 
-app.use("/api/products", productsRouter);
+app.use("/", productsRouter);
 // app.use("/api/cart", cartRouter);
 
 app.listen(8080, () => {

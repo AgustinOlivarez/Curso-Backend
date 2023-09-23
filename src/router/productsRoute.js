@@ -1,4 +1,5 @@
 import { Router } from "express";
+// import { productsManager } from "../.src/ProductManager.js";
 const router = Router();
 
 router.get("/api/products", async (req, res) => {
