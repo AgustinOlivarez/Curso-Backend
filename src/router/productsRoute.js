@@ -44,10 +44,10 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:idProduct", async (req, res) => {
-  const newValue = req.body
-  const { idProduct } = req.params
+  const newValue = req.body;
+  const { idProduct } = req.params;
   try {
-    const response = await productsManager.updateProduct(+idProduct, newValue)
+    const response = await productsManager.updateProduct(+idProduct, newValue);
     if (response === -1) {
       res.status(400).json({ message: "Product not found with the id sent" });
     } else {
@@ -56,12 +56,11 @@ router.put("/:idProduct", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error });
   }
-
 });
 
 router.delete("/:idProduct", async (req, res) => {
   const { idProduct } = req.params;
-  console.log(req.params)
+  console.log(req.params);
   try {
     const response = await productsManager.deleteProduct(+idProduct);
     if (response === -1) {
@@ -72,6 +71,5 @@ router.delete("/:idProduct", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error });
   }
-
 });
 export default router;
