@@ -2,12 +2,12 @@ import { Router } from "express";
 import { productsManager } from "./../ProductManager.js";
 const router = Router();
 
-router.get("/api/products", async (req, res) => {
+router.get("/", async (req, res) => {
   const { limit } = req.query;
   try {
     const products = await productsManager.GetProducts(limit);
     if (!products.length) {
-      return res.status(200).json({ message: "No products" });
+      return res.status(200).json({ message: "No products found" });
     }
     res.status(200).json({ message: "Products found", products });
   } catch (error) {
@@ -15,7 +15,7 @@ router.get("/api/products", async (req, res) => {
   }
 });
 
-router.get("/api/products/:idProduct", async (req, res) => {
+router.get("/:idProduct", async (req, res) => {
   try {
     const product = await productsManager.getProductById(+req.params.idProduct);
     if (!product) {
@@ -27,7 +27,7 @@ router.get("/api/products/:idProduct", async (req, res) => {
   }
 });
 
-router.post("/api/products", async (req, res) => {
+router.post("/", async (req, res) => {
   const { title, description, price, code, stock, category } = req.body;
   let NewProduct = req.body;
   if (!title || !description || !price || !code || !stock || !category) {
@@ -43,7 +43,7 @@ router.post("/api/products", async (req, res) => {
   }
 });
 
-router.put("/api/products/:idProduct", async (req, res) => {
+router.put("/:idProduct", async (req, res) => {
   const newValue = req.body
   const { idProduct } = req.params
   try {
@@ -59,7 +59,7 @@ router.put("/api/products/:idProduct", async (req, res) => {
 
 });
 
-router.delete("/api/products/:idProduct", async (req, res) => {
+router.delete("/:idProduct", async (req, res) => {
   const { idProduct } = req.params;
   console.log(req.params)
   try {
