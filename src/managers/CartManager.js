@@ -1,78 +1,55 @@
-import fs from "fs";
+import { cartsModel } from "../db/models/cart.models.js";
+import BasicManager from "./BasicManager.js";
 
-class CartManager {
-  constructor(path) {
-    this.path = path;
+class CartsManager extends BasicManager {
+  constructor() {
+    super(cartsModel);
   }
 
-  async getCarts() {
-    try {
-      if (fs.existsSync(this.path)) {
-        const info = await fs.promises.readFile(this.path, "utf-8");
-        return JSON.parse(info);
-      } else {
-        return [];
-      }
-    } catch (error) {
-      return error;
-    }
+  async findInfoProducts(idCart) {
+    const cart = await cartsModel
+      .findById(idCart)
+      .populate("productsCart.idProduct")
+      .lean();
+    return cart;
+  }
+  async findAllSimple() {
+    return this.model.find().populate("productsCart.idProduct").lean();
   }
 
-  async createCart() {
-    try {
-      const carts = await this.getCarts({});
-      let id;
-      let products;
-      if (!carts.length) {
-        id = 1;
-        products = [];
-      } else {
-        id = carts[carts.length - 1].id + 1;
-        products = [];
-      }
-      carts.push({ id, products });
-      await fs.promises.writeFile(this.path, JSON.stringify(carts));
-    } catch (error) {
-      return error;
-    }
-  }
-  async getCartById(cid) {
-    try {
-      const carts = await this.getCarts({});
-      const cart = carts.find((c) => c.id === cid);
-      return cart;
-    } catch (error) {
-      return error;
-    }
-  }
+  async findAllCarts(obj) {
+    const { limit, page, ...queryFilter } = obj;
 
-  async addProductToCart(cid, pid) {
-    try {
-      const carts = await this.getCarts({});
-      let cart = await this.getCartById(+cid);
-      console.log(cart);
+    const effectiveLimit = limit || 10;
+    const effectivePage = page || 1;
 
-      let productIndex = cart.products.findIndex(
-        (product) => product.product === +pid
-      );
-      console.log(productIndex);
-      if (productIndex === -1) {
-        cart.products.push({
-          product: +pid,
-          quantity: 1,
-        });
-      } else {
-        cart.products[productIndex].quantity += 1;
-      }
+    const response = await cartsModel.paginate(queryFilter, {
+      limit: effectiveLimit,
+      page: effectivePage,
+      lean: true,
+    });
+    const info = {
+      status: "success",
+      payload: response.docs,
+      count: response.totalDocs,
+      totalPages: response.totalPages,
+      prevPage: response.prevPage,
+      nextPage: response.nextPage,
+      page: response.page,
+      hasPrevPage: response.hasPrevPage,
+      hasNextPage: response.hasNextPage,
+      prevLink: response.hasPrevPage
+        ? `http://localhost:8080/api/users?page=${response.prevPage}`
+        : null,
+      nextLink: response.hasNextPage
+        ? `http://localhost:8080/api/users?page=${response.nextPage}`
+        : null,
+    };
 
-      const cartIndex = carts.findIndex((cart) => cart.id === +cid);
-      carts[cartIndex] = cart;
-
-      await fs.promises.writeFile(this.path, JSON.stringify(carts));
-    } catch (error) {
-      return error;
-    }
+    return info;
   }
 }
 
-export default new CartManager("Cart.json");
+export const cartsManager = new CartsManager();
+
+

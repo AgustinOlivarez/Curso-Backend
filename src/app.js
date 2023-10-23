@@ -3,9 +3,9 @@ import { engine } from "express-handlebars";
 import productsRouter from "./router/productsRoute.js";
 import cartRouter from "./router/cartRoute.js";
 import viewsRouter from "./router/viewRoute.js"
-import { productsManager } from "./managers/ProductManager.js";
 import { __dirname } from "./utils.js";
 import { Server } from "socket.io";
+import "./db/config.js";
 
 const app = express();
 // Config Express
