@@ -1,5 +1,4 @@
 import Router from "express";
-
 import { cartsManager } from "../managers/CartManager.js";
 
 const router = Router();
@@ -27,7 +26,6 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-
   try {
     const carts = await cartsManager.findAllCarts(req.query);
     res.status(200).json({ message: "Carts", carts });
@@ -83,7 +81,7 @@ router.get("/:idCart", async (req, res) => {
   const { idCart } = req.params;
   try {
     const cartInfo = await cartsManager.findInfoProducts(idCart);
-    res.render("thisCart", { cartInfo });
+    console.log(cartInfo), res.render("thisCart", { cartInfo });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -100,12 +98,11 @@ router.put("/:idCart", async (req, res) => {
   }
 });
 
-
 router.put("/:idCart/products/:idProduct", async (req, res) => {
   const { idCart, idProduct } = req.params;
   const cleanedProductId = idProduct.trim();
   const { qty } = req.body || 1;
-  
+
   try {
     const cart = await cartsManager.findInfoProducts(idCart);
     if (!cart) {
@@ -128,7 +125,9 @@ router.put("/:idCart/products/:idProduct", async (req, res) => {
       );
 
       if (!updateResult) {
-        return res.status(500).json({ error: "Failed to update product quantity in cart" });
+        return res
+          .status(500)
+          .json({ error: "Failed to update product quantity in cart" });
       }
 
       return res.status(200).json({
@@ -146,7 +145,9 @@ router.put("/:idCart/products/:idProduct", async (req, res) => {
       );
 
       if (!updateResult) {
-        return res.status(500).json({ error: "Failed to add a new product to the cart" });
+        return res
+          .status(500)
+          .json({ error: "Failed to add a new product to the cart" });
       }
 
       return res.status(200).json({
