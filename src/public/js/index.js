@@ -1,28 +1,33 @@
-const socketClient = io();
-const form = document.getElementById("form");
-const inputTitle = document.getElementById("title");
-const inputDescription = document.getElementById("description");
-const inputPrice = document.getElementById("price");
+console.log('probando cliente');
+const socketClient=io()
 const table = document.getElementById("table");
-const tableBody = document.getElementById("tableBody");
-form.onsubmit = (e) => {
-  e.preventDefault();
-  const product = {
-    title: inputTitle.value,
-    description: inputDescription.value,
-    price: inputPrice.value,
-  };
-  socketClient.emit("createProduct", product);
-};
+const form= document.getElementById('formMessage')
+const fromUser= document.getElementById('fromUser')
+const contentMessage=document.getElementById('contentMessage')
+const  toUser= document.getElementById('toUser');
 
-socketClient.on("productCreated", (product) => {
-  const { id, title, description, price } = product;
-  const row = `
+form.onsubmit= (e)=>{
+    e.preventDefault()
+    const message = {
+        fromUser: fromUser.value,
+        contentMessage: contentMessage.value,
+        toUser: toUser.value,
+    };
+    socketClient.emit('bodyMessage', message)
+}
+
+socketClient.on("messageCreated", (message)=>{
+    const {
+        fromUser,
+        contentMessage,
+        toUser
+    } = message;
+    const row = `
     <tr>
-    <td>${id}</td>
-            <td>${title}</td>
-            <td>${description}</td>
-            <td>${price}</td>
+    <td>${fromUser}</td>
+            <td>${toUser}</td>
+            <td>${contentMessage}</td>
         </tr>`;
-  table.innerHTML += row;
-});
+    table.innerHTML += row;
+ 
+})

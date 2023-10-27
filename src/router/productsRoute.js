@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
     return res.status(400).json({ message: "Some data is missing" });
   }
   try {
-    const result = await productsManager.createOne(req.body);
+    const result = await productsManager.createOne(NewProduct);
     res.status(200).json({ message: "Product Added", product: result });
   } catch (error) {
     res.status(500).json({ message: error });
