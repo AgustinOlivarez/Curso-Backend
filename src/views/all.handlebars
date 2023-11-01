@@ -1,4 +1,5 @@
 <section class="allProducts">
+  <h3>Welcome {{first_name}}, your email is: {{email}}</h3>
   <h3>ALL PRODUCTS</h3>
   <section class="containerProducts">
     {{#each products}}
@@ -13,5 +14,6 @@
 
       </a>
     {{/each}}
+    <button onclick="location.href ='/api/users/logout'">Logout</button>
   </section>
 </section>

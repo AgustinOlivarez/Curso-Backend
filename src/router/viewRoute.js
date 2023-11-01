@@ -3,6 +3,21 @@ import { productsManager } from "../managers/ProductManager.js";
 
 const router = Router();
 
+router.get("/", (req, res) => {
+  res.render("login");
+});
+
+router.get("/signup", (req, res) => {
+  res.render("signup");
+});
+
+router.get("/home", async (req, res) => {
+  const products = await productsManager.findAllSimpleProducts();
+  console.log("req", req);
+  const { email, first_name } = req.session;
+  res.render("all", { products, email, first_name });
+});
+
 router.get("/createProduct", (req, res) => {
   res.render("createProduct");
 });
