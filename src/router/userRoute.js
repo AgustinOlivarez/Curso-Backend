@@ -1,34 +1,40 @@
 import { Router } from "express";
-import { usersManager } from "../managers/UserManager.js";
-import { compareData, hashData } from "../utils.js";
+import passport from "passport";
 const router = Router();
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const userDB = await usersManager.findByEmail(email);
-  if (!userDB) {
-    return res.json({ error: "This email does not exist" });
-  }
-  const comparePassword = await compareData(password, userDB.password);
-  if (!comparePassword) {
-    return res.json({ error: "Email or password do not match" });
-  }
-  req.session["email"] = email;
-  req.session["first_name"] = userDB.first_name;
-  req.session["isAdmin"] =
-    email === "adminCoder@coder.com" && password === "Cod3r123" ? true : false;
-  res.redirect("/home");
-});
+router.post(
+  "/login",
+  passport.authenticate("login", {
+    successRedirect: "/home",
+    failureRedirect: "/error",
+  })
+);
 
-router.post("/signup", async (req, res) => {
-  const { password } = req.body;
-  const hashedPassword = await hashData(password);
-  const createdUser = await usersManager.createOne({
-    ...req.body,
-    password: hashedPassword,
-  });
-  res.status(200).json({ message: "User created", createdUser });
-});
+router.post(
+  "/signup",
+  passport.authenticate("signup", {
+    successRedirect: "/home",
+    failureRedirect: "/error",
+  })
+);
+
+// GITHUB
+
+router.get(
+  "/auth/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+router.get(
+  "/github",
+  passport.authenticate("github", {
+    failureRedirect: "/error",
+  }),
+  (req, res) => {
+    req.session.user = req.user;
+    res.redirect("/home");
+  }
+);
 
 router.get("/logout", (req, res) => {
   req.session.destroy(() => {

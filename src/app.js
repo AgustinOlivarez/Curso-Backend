@@ -13,6 +13,8 @@ import { messageManager } from "./managers/messagesManager.js";
 import session from "express-session";
 import FileStore from "session-file-store";
 import mongoStore from "connect-mongo";
+import passport from "passport";
+import "./passport.js";
 
 const app = express();
 // Config Express
@@ -61,6 +63,10 @@ socketServer.on("connection", (socket) => {
       socketServer.emit("messageCreated", newMessage);
   });
 });
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use("/", viewsRouter);
